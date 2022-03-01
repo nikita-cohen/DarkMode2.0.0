@@ -13,7 +13,13 @@
     "http://*/*",
     "https://*/*"
   ],
+  "icons": {
+    "16": "asset/icon_16.png",
+    "48": "asset/night-icon.png",
+    "128": "asset/icon_128.png"
+  },
   "action": {
+    "default_icon" : "asset/day-icon.png",
     "default_popup": "./html/Popup.html"
   },
   "content_scripts": [

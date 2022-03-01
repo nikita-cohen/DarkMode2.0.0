@@ -27,6 +27,7 @@ function setOnChange() {
             chrome.tabs.query( {}, function (tabs) {
                 tabs.forEach(tab => {
                         chrome.tabs.sendMessage(tab.id, {type: "dark"})
+                    chrome.runtime.sendMessage({newIconPath : "../asset/night-icon.png"})
                 })
             })
 
@@ -37,6 +38,7 @@ function setOnChange() {
             chrome.tabs.query({}, function (tabs) {
                 tabs.forEach(tab => {
                         chrome.tabs.sendMessage(tab.id, {type: "dark"})
+                    chrome.runtime.sendMessage({newIconPath : "../asset/day-icon.png"})
                 })
             })
         }

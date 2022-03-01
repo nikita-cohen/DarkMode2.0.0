@@ -6,3 +6,16 @@ chrome.tabs.query({}, function(tabs) {
         }
     });
 });
+
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        chrome.tabs.query({}, function (tabs) {
+            tabs.forEach(tab => {
+                chrome.action.setIcon({path: request.newIconPath, tabId: tab.id}, () => {
+
+                });
+            })
+        })
+
+    });
