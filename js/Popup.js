@@ -85,7 +85,8 @@ function checkTabUrl(tab) {
         case "yandex" :
             return {"url" : "/asset/custom-dark-mode/yandex.css", "name" : "yandex"};
         default :
-            return {"url" : "/asset/custom-dark-mode/dark.css", "name" : "dark"};
+            console.log("deafultLook")
+            return {"url" : "/asset/custom-dark-mode/defaultLook.css", "name" : "default"};
     }
 }
 

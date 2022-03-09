@@ -64,7 +64,7 @@ function checkTabUrl(url) {
         case "yandex" :
             return {"url" : "/asset/custom-dark-mode/yandex.css", "name" : "yandex"};
         default :
-            return {"url" : "/asset/custom-dark-mode/dark.css", "name" : "dark"};
+            return {"url" : "/asset/custom-dark-mode/defaultLook.css", "name" : "default"};
     }
 }
 
@@ -74,14 +74,14 @@ function checkIfDarkModeOn() {
             if (result.dark_mode === "on") {
                 const choosenStyle = checkTabUrl(window.location.href);
                 toggle(choosenStyle.url, choosenStyle.name);
-                chrome.runtime.sendMessage({type : "icon", newIconPath : "../asset/day-icon.png"})
+                chrome.runtime.sendMessage({type : "icon", newIconPath : "../asset/night-icon.png"})
             }
         }
     })
 }
 
 function toggle(style, url) {
-    if (url !== "youtube" && url !== "facebook" && url !== "amazon" && url !== "maps") {
+    if (url !== "youtube" && url !== "facebook" && url !== "amazon" && url !== "maps" && url !== "default") {
         let o = document.querySelectorAll('#nightifyOne')
         let q = document.querySelectorAll('#nightify')
         if (q.length && o.length) {
@@ -97,7 +97,7 @@ function toggle(style, url) {
         }
     }
 
-    if (url !== "youtube" && url !== "facebook" && url !== "amazon" && url !== "maps") {
+    if (url !== "youtube" && url !== "facebook" && url !== "amazon" && url !== "maps" && url !== "default") {
         let styleD = document.createElement('link');
         styleD.setAttribute('rel', 'stylesheet');
         styleD.setAttribute('id', 'nightifyOne');
