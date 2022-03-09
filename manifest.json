@@ -39,5 +39,12 @@
 
   "background": {
     "service_worker": "js/Background.js"
-  }
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["asset/custom-dark-mode/*.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
