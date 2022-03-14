@@ -7,6 +7,8 @@ function checkTabUrl(url) {
             return {"url" : "/asset/custom-dark-mode/google.css", "name" : "google"};
         case "facebook" :
             return {"url" : "/asset/custom-dark-mode/facebook.css", "name" : "facebook"};
+        case "he-il" :
+            return {"url" : "/asset/custom-dark-mode/facebook.css", "name" : "facebook"};
         case "accounts" :
             return {"url" : "/asset/custom-dark-mode/accounts.css", "name" : "accounts"};
         case "amazon" :
@@ -26,6 +28,8 @@ function checkTabUrl(url) {
         case "github" :
             return {"url" : "/asset/custom-dark-mode/github.css", "name" : "github"};
         case "gmail" :
+            return {"url" : "/asset/custom-dark-mode/gmail.css", "name" : "gmail"};
+        case "mail" :
             return {"url" : "/asset/custom-dark-mode/gmail.css", "name" : "gmail"};
         case "instagram" :
             return {"url" : "/asset/custom-dark-mode/instagram.css", "name" : "instagram"};
@@ -69,18 +73,23 @@ function checkTabUrl(url) {
 }
 
 function checkIfDarkModeOn() {
-    chrome.storage.local.get('dark_mode', function (result) {
+    chrome.storage.local.get('dark_mode', async function (result) {
         if (result.dark_mode) {
             if (result.dark_mode === "on") {
                 const choosenStyle = checkTabUrl(window.location.href);
-                toggle(choosenStyle.url, choosenStyle.name);
+                await toggle(choosenStyle.url, choosenStyle.name);
                 chrome.runtime.sendMessage({type : "icon", newIconPath : "../asset/night-icon.png"})
             }
         }
     })
 }
 
-function toggle(style, url) {
+async function getInnerHtmlOfCssDocument(style) {
+    const res = await fetch(chrome.runtime.getURL(style));
+    return await res.text();
+}
+
+async function toggle(style, url) {
     if (url !== "youtube" && url !== "facebook" && url !== "amazon" && url !== "maps" && url !== "default") {
         let o = document.querySelectorAll('#nightifyOne')
         let q = document.querySelectorAll('#nightify')
@@ -98,26 +107,34 @@ function toggle(style, url) {
     }
 
     if (url !== "youtube" && url !== "facebook" && url !== "amazon" && url !== "maps" && url !== "default") {
-        let styleD = document.createElement('link');
-        styleD.setAttribute('rel', 'stylesheet');
-        styleD.setAttribute('id', 'nightifyOne');
-        styleD.setAttribute('href', chrome.runtime.getURL('/asset/custom-dark-mode/dark.css'));
-        document.head.appendChild(styleD)
+        const innerHtml = await getInnerHtmlOfCssDocument('/asset/custom-dark-mode/dark.css');
+        let styleElement = document.createElement('style');
+        styleElement.innerHTML = innerHtml;
+        styleElement.id = 'nightifyOne';
+        styleElement.type = "text/css";
+        document.head.appendChild(styleElement);
     }
 
-    let link = document.createElement('link');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('id', 'nightify');
-    link.setAttribute('href', chrome.runtime.getURL(style));
-    document.head.appendChild(link);
-    return true
+    try {
+        const innerHtml = await getInnerHtmlOfCssDocument(style);
+        let styleElement = document.createElement('style');
+        styleElement.innerHTML = innerHtml;
+        styleElement.setAttribute('id', 'nightify');
+        styleElement.setAttribute('type', "text/css")
+        document.head.appendChild(styleElement);
+        return true
+    } catch (e) {
+        console.log("error" , e);
+    }
+
 }
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.type === "dark") {
-        toggle(request.style.url, request.style.name)
+chrome.runtime.onMessage.addListener( function (request, sender, sendResponse) {
+    if (request.type === "dark" && !chrome.runtime.lastError) {
+        toggle(request.style.url, request.style.name).then(data => console.log(data))
     }
     return true;
 })
 
-checkIfDarkModeOn()
+checkIfDarkModeOn();
+

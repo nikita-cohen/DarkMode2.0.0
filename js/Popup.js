@@ -28,6 +28,8 @@ function checkTabUrl(tab) {
             return {"url" : "/asset/custom-dark-mode/google.css", "name" : "google"};
         case "facebook" :
             return {"url" : "/asset/custom-dark-mode/facebook.css", "name" : "facebook"};
+        case "he-il" :
+            return {"url" : "/asset/custom-dark-mode/facebook.css", "name" : "facebook"};
         case "accounts" :
             return {"url" : "/asset/custom-dark-mode/accounts.css", "name" : "accounts"};
         case "amazon" :
@@ -47,6 +49,8 @@ function checkTabUrl(tab) {
         case "github" :
             return {"url" : "/asset/custom-dark-mode/github.css", "name" : "github"};
         case "gmail" :
+            return {"url" : "/asset/custom-dark-mode/gmail.css", "name" : "gmail"};
+        case "mail" :
             return {"url" : "/asset/custom-dark-mode/gmail.css", "name" : "gmail"};
         case "instagram" :
             return {"url" : "/asset/custom-dark-mode/instagram.css", "name" : "instagram"};

@@ -9,14 +9,19 @@ chrome.tabs.query({}, function(tabs) {
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.type === "icon") {
-            chrome.tabs.query({}, function (tabs) {
-                tabs.forEach(tab => {
-                    console.log(request.newIconPath)
-                    chrome.action.setIcon({tabId : tab.id, path : request.newIconPath}, () => {
+        if (!chrome.runtime.lastError) {
+            if (request.type === "icon") {
+                chrome.tabs.query({}, function (tabs) {
+                    tabs.forEach(tab => {
+                        console.log(request.newIconPath)
+                        chrome.action.setIcon({tabId : tab.id, path : request.newIconPath}, () => {
 
-                    });
+                        });
+                    })
                 })
-            })
+            }
         }
+
+        return true;
+
     });
