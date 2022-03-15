@@ -16,7 +16,7 @@ a[aria-label*="@gmail.com"] {
   -webkit-filter: invert(100%) !important;
 }
 
-playback-header, 
+playback-header,
 playback-controls {
   background-color: transparent !important;
 }
@@ -52,7 +52,7 @@ a:link, .w, #prs a:visited, #prs a:active, .q:active, .q:visited, .kl:active, .t
 
 .mat-icon-button,
 .mat-icon-button[_ngcontent-lvx-c22],
-.mat-icon-button[_ngcontent-lvx-c22]:hover, 
+.mat-icon-button[_ngcontent-lvx-c22]:hover,
 .mat-icon-button.cdk-focused[_ngcontent-lvx-c22] {
   color: rgb(0 0 0 / 80%) !important;
 }

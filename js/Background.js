@@ -7,20 +7,59 @@ chrome.tabs.query({}, function(tabs) {
     });
 });
 
-chrome.runtime.onMessage.addListener(
-    function(request) {
-        if (!chrome.runtime.lastError) {
-            if (request.type === "icon") {
+chrome.storage.local.get('dark_mode' , (result) => {
+    if (result.dark_mode === "on") {
+        chrome.tabs.query({}, function (tabs) {
+            tabs.forEach(tab => {
+                chrome.action.setIcon({tabId : tab.id, path : '../asset/night-icon.png'}, () => {
+                });
+            })
+        })
+    }
+
+    if (result.dark_mode === "off") {
+        chrome.tabs.query({}, function (tabs) {
+            tabs.forEach(tab => {
+                chrome.action.setIcon({tabId : tab.id, path : '../asset/day-icon.png'}, () => {
+                });
+            })
+        })
+    }
+})
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.type === "change_icon") {
+        chrome.tabs.query({}, function (tabs) {
+            tabs.forEach(tab => {
+                if (tab.active ){
+                    chrome.action.setIcon({tabId : tab.id, path : '../asset/night-icon.png'}, () => {
+                    });
+                }
+            })
+        })
+    }
+    return true;
+});
+
+
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+    for (let [key, {oldValue, newValue}] of Object.entries(changes)) {
+        if (key === 'dark_mode') {
+            if (newValue === "on") {
                 chrome.tabs.query({}, function (tabs) {
                     tabs.forEach(tab => {
-                        console.log(request.newIconPath)
-                        chrome.action.setIcon({tabId : tab.id, path : request.newIconPath}, () => {
-
+                        chrome.action.setIcon({tabId : tab.id, path : '../asset/night-icon.png'}, () => {
+                        });
+                    })
+                })
+            } else {
+                chrome.tabs.query({}, function (tabs) {
+                    tabs.forEach(tab => {
+                        chrome.action.setIcon({tabId : tab.id, path : '../asset/day-icon.png'}, () => {
                         });
                     })
                 })
             }
         }
-
-        return true;
-    });
+    }
+})

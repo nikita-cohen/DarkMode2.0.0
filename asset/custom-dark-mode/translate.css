@@ -31,13 +31,13 @@ textarea {
   background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-.result, 
-.gt-edit, 
-.results-container, 
+.result,
+.gt-edit,
+.results-container,
 .contribute-target,
 .gt-baf-word-selected,
 .gt-lc.gt-lc-mobile .gt-cd,
-.gt-lc.gt-lc-mobile .gt-cd-cl, 
+.gt-lc.gt-lc-mobile .gt-cd-cl,
 .gt-lc.gt-lc-mobile .gt-cd-ncl {
   background-color: #e8e8e8 !important;
 }

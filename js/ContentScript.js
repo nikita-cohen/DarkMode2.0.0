@@ -1,4 +1,4 @@
-const basicStyle = `/*
+var basicStyle = `/*
   Parts of this code is inspired from the following:
   [1] https://userstyles.org/styles/134548/nightmod-black-global-colour-edit
 */
@@ -245,9 +245,9 @@ function checkIfDarkModeOn() {
     chrome.storage.local.get('dark_mode', async function (result) {
         if (result.dark_mode) {
             if (result.dark_mode === "on") {
-                const choosenStyle = checkTabUrl(window.location.href);
-                await toggle(choosenStyle.url, choosenStyle.name);
-                chrome.runtime.sendMessage({type : "icon", newIconPath : "../asset/night-icon.png"})
+                const chosenStyle = checkTabUrl(window.location.href);
+                await toggle(chosenStyle.url, chosenStyle.name);
+                chrome.runtime.sendMessage({type : "change_icon"});
             }
         }
     })
@@ -265,24 +265,21 @@ async function getInnerHtmlOfCssDocument(style) {
     }
 }
 
+function deleteStyle() {
+    let o = document.querySelectorAll('#nightifyOne')
+    let q = document.querySelectorAll('#nightify')
+    if (q.length && o.length) {
+        o[0].parentNode.removeChild(o[0])
+        q[0].parentNode.removeChild(q[0])
+    } else if (q.length && !o.length){
+        q[0].parentNode.removeChild(q[0])
+    } else if (!q.length && o.length){
+        o[0].parentNode.removeChild(o[0])
+    }
+}
+
 async function toggle(style, url) {
     try {
-        if (url !== "youtube" && url !== "facebook" && url !== "amazon" && url !== "maps" && url !== "default") {
-            let o = document.querySelectorAll('#nightifyOne')
-            let q = document.querySelectorAll('#nightify')
-            if (q.length && o.length) {
-                o[0].parentNode.removeChild(o[0])
-                q[0].parentNode.removeChild(q[0])
-                return false
-            }
-        } else {
-            let q = document.querySelectorAll('#nightify')
-            if (q.length) {
-                q[0].parentNode.removeChild(q[0])
-                return false
-            }
-        }
-
         if (url !== "youtube" && url !== "facebook" && url !== "amazon" && url !== "maps" && url !== "default") {
             const innerHtml = await getInnerHtmlOfCssDocument('/asset/custom-dark-mode/dark.css');
             let styleElement = document.createElement('style');
@@ -314,15 +311,17 @@ async function toggle(style, url) {
     }
 }
 
-chrome.runtime.onMessage.addListener( function (request) {
-    if (request.type === "dark" && !chrome.runtime.lastError) {
-        toggle(request.style.url, request.style.name)
-            .then(data => console.log(data))
-            .catch(e => {
-                console.error('Error in toggle: ', e.message);
-            })
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+    for (let [key, {oldValue, newValue}] of Object.entries(changes)) {
+        if (key === 'dark_mode') {
+            if (newValue === 'on') {
+                const urlObj = checkTabUrl(window.location.href);
+                toggle(urlObj.url, urlObj.name).then();
+            } else if (newValue === 'off') {
+                deleteStyle();
+            }
+        }
     }
-    return true;
 })
 
 checkIfDarkModeOn();

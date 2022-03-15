@@ -28,8 +28,8 @@ div#hp_container #hp_ctrls div#sh_rdiv {
   -webkit-filter: invert(100%) !important;
 }
 
-#carousel #crs_pane .itile .crs_item #crs_content img, 
-#carousel #crs_pane .itile .crs_item .crs_content img, 
+#carousel #crs_pane .itile .crs_item #crs_content img,
+#carousel #crs_pane .itile .crs_item .crs_content img,
 #carousel #crs_pane .itile .crs_item .see_more_left img {
   filter: invert(0) !important;
   -webkit-filter: invert(0) !important;
@@ -56,15 +56,15 @@ cite,
 }
 
 #b_footer {
-  background-color: #0a0a0a !important; 
+  background-color: #0a0a0a !important;
 }
 
 #detailMeta a.ptitle {
-  color: rgb(19 19 19 / 80%) !important; 
+  color: rgb(19 19 19 / 80%) !important;
 }
 
 .vidDat .wi,
 #detailPage a,
 #detailPage .cpyrtc {
-  color: #000 !important; 
+  color: #000 !important;
 }
