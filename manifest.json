@@ -43,11 +43,11 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["asset/custom-dark-mode/accounts.css",
+      "resources": [
+        "asset/custom-dark-mode/accounts.css",
         "asset/custom-dark-mode/amazon.css",
         "asset/custom-dark-mode/bing.css",
         "asset/custom-dark-mode/dark.css",
-        "asset/custom-dark-mode/defaultLook.css",
         "asset/custom-dark-mode/docs.css",
         "asset/custom-dark-mode/drive.css",
         "asset/custom-dark-mode/dropbox.css",
@@ -76,6 +76,10 @@
         "asset/custom-dark-mode/yahoo.css",
         "asset/custom-dark-mode/yandex.css",
         "asset/custom-dark-mode/youtube.css"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["asset/custom-dark-mode/generalStyle.css"],
       "matches": ["<all_urls>"]
     }
   ]

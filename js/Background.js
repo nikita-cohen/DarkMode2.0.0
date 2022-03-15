@@ -8,7 +8,7 @@ chrome.tabs.query({}, function(tabs) {
 });
 
 chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
+    function(request) {
         if (!chrome.runtime.lastError) {
             if (request.type === "icon") {
                 chrome.tabs.query({}, function (tabs) {
@@ -23,5 +23,4 @@ chrome.runtime.onMessage.addListener(
         }
 
         return true;
-
     });
