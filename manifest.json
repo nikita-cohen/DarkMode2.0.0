@@ -77,10 +77,6 @@
         "asset/custom-dark-mode/yandex.css",
         "asset/custom-dark-mode/youtube.css"],
       "matches": ["<all_urls>"]
-    },
-    {
-      "resources": ["asset/custom-dark-mode/generalStyle.css"],
-      "matches": ["<all_urls>"]
     }
   ]
 }
